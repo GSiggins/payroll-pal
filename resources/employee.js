@@ -3,9 +3,9 @@ class Employee {
         this.firstname = firstname;
         this.lastname = lastname;
         this.title = title;
-        this.role = role;
+        this.role = role; //ID
         this.manager = manager;
     }
 }
 
-module.exports = Employee;
+module.exports = Employee;  
