@@ -1,12 +1,63 @@
-const mainSplash = require('../server')
-const resources = require('../resources')
+const dbconn = require('../server.js')
+const inquirer = require('inquirer')
+const {Department, Employee, Role} = require('../resources')
+const queries = require('./dbquery')
 
 employeeArray = [];
 roleArray = [];
 departmentArray = [];
+mainChoiceArr = ['View all departments', 'View all roles', 'View all employees', 'Add a department', 'Add a role', 'Add an employee', 'Update an employee role']
 
 
-const addEmp = () => {
+function mainSplash() {
+    inquirer
+        .prompt([
+            {
+                type: 'list',
+                message: 'What would you like to do?',
+                name: 'main',
+                choices: mainChoiceArr,
+            },
+        ])
+        .then(answer => {
+            switch (answer.main) {
+                case 'View all departments':
+                    viewDepartment();
+                    break;
+
+                case 'View all roles':
+                    viewRoles();
+                    break;
+
+                case 'View all employees':
+                    viewEmployees();
+                    break;
+
+                case 'Add a department':
+                    addDep();
+                    break;
+
+                case 'Add a role':
+                    addRole();
+                    break;
+
+                case 'Add an employee':
+                    addEmp();
+                    break;
+
+                case 'Update an employee role':
+                    updRole();
+                    break;
+
+                default:
+                    buildTeam();
+                    break;
+            }
+        })
+}
+
+
+function addEmp() {
     inquirer
         .prompt([
             {
@@ -44,11 +95,12 @@ const addEmp = () => {
                 answers.manager,
             )
             employeeArray.push(employee);
+            console.log(employeeArray)
             mainSplash();
         })
-}
+};
 
-const addRole = () => {
+function addRole() {
     inquirer
         .prompt([
             {
@@ -76,10 +128,10 @@ const addRole = () => {
             roleArray.push(role);
             mainSplash();
         })
-}
+};
 
 
-const addDep = () => {
+function addDep() {
     inquirer
         .prompt([
             {
@@ -95,5 +147,9 @@ const addDep = () => {
             departmentArray.push(department);
             mainSplash();
         })
-}
+};
 
+
+mainSplash()
+
+module.exports = {addEmp, addDep, addRole}
