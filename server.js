@@ -335,9 +335,9 @@ function viewEmployees() {
     FROM employee employee 
     LEFT JOIN employee manager 
     ON employee.manager_id = manager.id, 
+    JOIN role ON employee.role_id = role.id,
     JOIN department 
-    ON role.department_id = department.id, 
-    JOIN role ON employee.role_id = role.id;`;
+    ON role.department_id = department.id;`;
     db.query(sql, function (err, data) {
         if (err) {
             console.error(err);
